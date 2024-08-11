@@ -1,7 +1,4 @@
 import os
-import sys
-
-from chromadb.api.types import Document
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
 from typing import Any, Dict, List
@@ -9,22 +6,27 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain_chroma import Chroma
-from mistralai.client import MistralClient
 from langchain_mistralai.embeddings import MistralAIEmbeddings
 from langchain_mistralai.chat_models import ChatMistralAI
-
+from mistralai import Mistral
 
 load_dotenv()
 
-api_key=os.environ["MISTRAL_API_KEY"]
-client = MistralClient(api_key=api_key)
+MISTRAL_API_KEY=os.environ["MISTRAL_API_KEY"]
+PERSIST_DIRECTORY="./.chroma"
+COLLECTION_NAME="rag-chroma"
+EMBEDDING_MODEL="mistral-embed"
+SIMILARITY_THRESHOLD=0.5
 
-embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=api_key)
-llm = ChatMistralAI(model="open-mistral-nemo-2407", mistral_api_key=api_key)
+api_key=os.environ["MISTRAL_API_KEY"]
+client = Mistral(api_key=api_key)
+
+embeddings = MistralAIEmbeddings(model=EMBEDDING_MODEL, mistral_api_key=MISTRAL_API_KEY)
+llm = ChatMistralAI(model="open-mistral-nemo-2407", mistral_api_key=MISTRAL_API_KEY)
 
 retriever = Chroma(
-    collection_name="rag-chroma",
-    persist_directory="./.chroma",
+    collection_name=COLLECTION_NAME,
+    persist_directory=PERSIST_DIRECTORY,
     embedding_function=embeddings,
 ).as_retriever(
     search_type="similarity_score_threshold",
@@ -79,7 +81,7 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
 
 
 if __name__ == "__main__":
-    res = run_llm(query="tengo un perro peligroso. Tengo que informar al Ayuntamiento?")
-    #res = run_llm(query="Cómo puedo subsanar?")
+    #res = run_llm(query="tengo un perro peligroso. Tengo que informar al Ayuntamiento?")
+    res = run_llm(query="Soy funcionario del Ayuntamiento.  Cómo puedo solicitar la carrera profesional?")
 
     print(res)

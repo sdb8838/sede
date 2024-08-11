@@ -1,16 +1,14 @@
 import os
 from dotenv import load_dotenv
-
-load_dotenv()
-
-
 import logging
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_chroma import Chroma
-#from langchain_openai import OpenAIEmbeddings
-from mistralai.client import MistralClient
 from langchain_mistralai.embeddings import MistralAIEmbeddings
+from mistralai import Mistral
+
+load_dotenv()
+
 # Logging Configuration
 logging.basicConfig(level=logging.INFO)
 
@@ -20,7 +18,7 @@ PERSIST_DIRECTORY="./.chroma"
 COLLECTION_NAME="rag-chroma"
 EMBEDDING_MODEL="mistral-embed"
 
-mistral_client = MistralClient(api_key=MISTRAL_API_KEY)
+mistral_client = Mistral(api_key=MISTRAL_API_KEY)
 mistral_embeddings = MistralAIEmbeddings(model=EMBEDDING_MODEL, mistral_api_key=MISTRAL_API_KEY)
 
 
