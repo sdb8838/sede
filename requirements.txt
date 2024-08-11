@@ -17,3 +17,5 @@ mistralai~=1.0.1
 streamlit~=1.37.1
 beautifulsoup4
 tiktoken
+langchain-chroma
+langchain-mistralai
