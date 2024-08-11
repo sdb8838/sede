@@ -1,0 +1,9 @@
+Pipfile
+Pipfile.lock
+.env
+.venv
+.chroma
+chroma_db
+chromadb
+__init__.py
+.idea
