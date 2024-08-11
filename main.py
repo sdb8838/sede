@@ -10,18 +10,17 @@ def create_sources_string(source_urls: Set[str]) -> str:
     sources_list.sort()
     sources_string = "sources:\n"
     for i, source in enumerate(sources_list):
-        sources_string += f"{i+1}. {source}\n"
+        sources_string += f"{i + 1}. {source}\n"
     return sources_string
 
 
 st.header("Asistente de procedimientos de la sede electrónica del Ayuntamiento de Murcia")
 
-
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "chat_history" not in st.session_state:
-        st.session_state.chat_history = []
+    st.session_state.chat_history = []
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:

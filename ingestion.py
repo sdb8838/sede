@@ -48,11 +48,6 @@ def create_chroma_vectorstore(documents, embedding_function, persist_directory, 
         # Check and return the vectorstore (whether it was created or not)
         return vectorstore
 
-#retriever = Chroma(
-#    collection_name="rag-chroma",
-#    persist_directory="./.chroma",
-#    embedding_function=embeddings,
-#).as_retriever()
 
 if __name__ == "__main__":
     plantilla_url = "https://sede.murcia.es/ficha-procedimiento?idioma=es&id="
@@ -153,7 +148,6 @@ if __name__ == "__main__":
 
     loader = WebBaseLoader(urls, continue_on_failure=False)
     docs=loader.load()
-    #docs_list = [item for sublist in docs for item in sublist]
 
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
         chunk_size=2000, chunk_overlap=100
